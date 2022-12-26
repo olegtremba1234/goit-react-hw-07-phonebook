@@ -1,0 +1,12 @@
+.list {
+  background-color: rgba(74, 195, 247, 0.94);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.text{
+  margin: 0;
+}
