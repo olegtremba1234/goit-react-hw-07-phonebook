@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import style from "./ContactForm.module.css"
 import { useAddContactMutation, useGetContactsApiQuery } from "redux/contactsAPI";
 
-export default function ContactForm(){
+export default function ContactForm() {
     const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+    const [phone, setPhone] = useState('');
     const [addContact] = useAddContactMutation();
-    const { data } =useGetContactsApiQuery
+    const { data } = useGetContactsApiQuery();
 
     const handleChange = e => {
         const prop = e.currentTarget.name;
@@ -14,8 +14,8 @@ export default function ContactForm(){
             case 'name':
                 setName(e.currentTarget.value);
                 break;
-            case 'number':
-                setNumber(e.currentTarget.value);    
+            case 'phone':
+                setPhone(e.currentTarget.value);    
                 break
             default:
                 throw new Error('Error');
@@ -26,15 +26,15 @@ export default function ContactForm(){
         e.preventDefault();
         if (
             data.find(contact => contact.name.toLowerCase() === name.toLowerCase())
-        ) {
+        ){
             setName('');
-            setNumber('');
+            setPhone('');
             return alert(`Number: ${name} is already in phonebook`)
         }
-        if (name && number) {
-            await addContact({ name: name, number: number}).unwrap();
+        if (name && phone) {
+            await addContact({ name: name, phone: phone}).unwrap();
             setName('');
-            setNumber('');
+            setPhone('');
         }
     };
     
@@ -57,10 +57,10 @@ export default function ContactForm(){
                     Number
                     <input
                         className={style.inputNumber}
-                        value={number}
+                        value={phone}
                         onChange={handleChange}
                         type="tel"
-                        name="number"
+                        name="phone"
                         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                         required

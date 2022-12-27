@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ReactComponent as Delete } from "./delete-icon.svg";
 import { useDeleteContactMutation } from 'redux/contactsAPI';
 
-const ContactItem = ({ id, name, number }) => {
+const ContactItem = ({ id, name, phone }) => {
   const [deleteContact] = useDeleteContactMutation();
 
   const handleDeleteContact = async id => {
@@ -15,7 +15,7 @@ const ContactItem = ({ id, name, number }) => {
     <li id={id} className={style.item}>
       <p className={style.contact}>
         {name}............
-        {number}
+        {phone}
       </p>
       <button
         className={style.btn}
@@ -36,7 +36,7 @@ const ContactItem = ({ id, name, number }) => {
 ContactItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 };
 
 export default ContactItem;

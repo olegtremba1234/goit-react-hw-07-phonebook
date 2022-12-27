@@ -26,13 +26,13 @@ const ContactList = () => {
       {
       <ul className={style.list}>
         {!isLoading && data && filterEl.length > 0 ? (
-        filterEl.map(({ id, name, number }) => (
+        filterEl.map(({ id, name, phone }) => (
           <ContactItem 
             key={id}
             data={filterEl}
             id={id} 
             name={name} 
-            number={number} 
+            phone={phone} 
           />
         ))
       ) : (
