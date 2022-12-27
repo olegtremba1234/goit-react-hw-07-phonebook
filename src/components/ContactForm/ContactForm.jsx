@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./ContactForm.module.css"
 import { useAddContactMutation, useGetContactsApiQuery } from "redux/contactsAPI";
 
-export default function ContactForm({ onSubmit }){
+export default function ContactForm(){
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     const [addContact] = useAddContactMutation();
