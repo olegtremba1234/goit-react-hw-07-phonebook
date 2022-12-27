@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import style from "./ContactForm.module.css"
-import { useSelector, useDispatch } from "react-redux";
-import { addContact } from "redux/contactSlice";
-import shortid from "shortid";
+import { useAddContactMutation, useGetContactsApiQuery } from "redux/contactsAPI";
 
 export default function ContactForm({ onSubmit }){
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-    const dispatch = useDispatch()
-    const contacts = useSelector(state => state.contacts.items)
+    const [addContact] = useAddContactMutation();
+    const { data } =useGetContactsApiQuery
 
     const handleChange = e => {
         const prop = e.currentTarget.name;
@@ -24,31 +22,24 @@ export default function ContactForm({ onSubmit }){
         }
     };
 
-    const handleSubmit = e => {
+    const handleAddContact = async e => {
         e.preventDefault();
-
-        const data = {
-            id:shortid.generate(),
-            name: name,
-            number: number,
-        }
         if (
-            contacts.find(
-                contact => contact.name.toLowerCase() === data.name.toLowerCase()
-            )
+            data.find(contact => contact.name.toLowerCase() === name.toLowerCase())
         ) {
             setName('');
             setNumber('');
-            return alert(`Number: ${data.name} is already in phonebook`)
+            return alert(`Number: ${name} is already in phonebook`)
         }
-
-        dispatch(addContact(data))
-        setName('');
-        setNumber('');
+        if (name && number) {
+            await addContact({ name: name, number: number}).unwrap();
+            setName('');
+            setNumber('');
+        }
     };
     
         return (
-            <form className={style.form} onSubmit={handleSubmit}>
+            <form className={style.form} onSubmit={handleAddContact}>
                 <label>
                     Name
                     <input

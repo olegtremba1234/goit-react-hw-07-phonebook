@@ -4,8 +4,6 @@ import Filter from "./Filter/Filter";
 import style from "./App.module.css"
 
 export default function App () {
-
-
     return (
       <div className={style.container}>
         <h1>Phonebook</h1>
@@ -15,5 +13,4 @@ export default function App () {
       <ContactList />
       </div>
     );
-  
 }

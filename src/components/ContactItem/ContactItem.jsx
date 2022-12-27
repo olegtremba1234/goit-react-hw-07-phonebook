@@ -1,13 +1,15 @@
 import React from 'react';
 import style from './ContactItem.module.css';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactSlice';
 import { ReactComponent as Delete } from "./delete-icon.svg";
+import { useDeleteContactMutation } from 'redux/contactsAPI';
 
 const ContactItem = ({ id, name, number }) => {
-  const dispatch = useDispatch();
-  const contactsDelete = id => dispatch(deleteContact(id));
+  const [deleteContact] = useDeleteContactMutation();
+
+  const handleDeleteContact = async id => {
+    await deleteContact(id).unwrap();
+  };
 
   return (
     <li id={id} className={style.item}>
@@ -18,7 +20,7 @@ const ContactItem = ({ id, name, number }) => {
       <button
         className={style.btn}
         type="submit"
-        onClick={() => contactsDelete(id)}
+        onClick={() => handleDeleteContact(id)}
       >
         <Delete
             style={{
